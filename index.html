@@ -15,6 +15,37 @@ h1{font-size:1.5rem;margin:0 0 .75rem}
 p{margin:0 0 1rem;line-height:1.6;color:#cbd5e1}
 a{color:#6ee7b7;font-weight:700}
 </style>
+<script id="math-guard">
+// Global Math & DOM Output Guard: prevents NaN / Infinity leaks to UI
+(function() {
+  const origToLocaleString = Number.prototype.toLocaleString;
+  Number.prototype.toLocaleString = function(locales, options) {
+    if (!Number.isFinite(this.valueOf())) return '0';
+    return origToLocaleString.call(this, locales, options);
+  };
+  const origToFixed = Number.prototype.toFixed;
+  Number.prototype.toFixed = function(digits) {
+    if (!Number.isFinite(this.valueOf())) return '0';
+    return origToFixed.call(this, digits);
+  };
+})();
+</script>
+<style id="global-quality-shield">
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+  .ad-bottom, .ad-bottom ins {
+    min-height: 280px !important;
+    background: transparent !important;
+  }
+  :focus-visible {
+    outline: 2px solid #2563eb !important;
+    outline-offset: 2px !important;
+  }
+</style>
 </head>
 <body>
 <main>
